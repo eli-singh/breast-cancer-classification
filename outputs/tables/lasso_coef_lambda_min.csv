@@ -1,0 +1,10 @@
+"term","coefficient"
+"Clump_Thickness",0.618053069866812
+"Bare_Nuclei",0.580726476102552
+"Bland_Chromatin",0.438536940462661
+"Marginal_Adhesion",0.345243038177107
+"Mitoses",0.335640224611676
+"Normal_Nucleoli",0.148053403266965
+"Cell_Size_Uniformity",0.134109001597254
+"Cell_Shape_Uniformity",0.110880395717904
+"Epithelial_Cell_Size",0
