@@ -1,0 +1,12 @@
+"metric","cm_lasso$byClass"
+"Sensitivity",0.943661971830986
+"Specificity",0.962121212121212
+"Pos Pred Value",0.930555555555556
+"Neg Pred Value",0.969465648854962
+"Precision",0.930555555555556
+"Recall",0.943661971830986
+"F1",0.937062937062937
+"Prevalence",0.349753694581281
+"Detection Rate",0.330049261083744
+"Detection Prevalence",0.354679802955665
+"Balanced Accuracy",0.952891591976099

@@ -1,0 +1,12 @@
+"metric","cm_glm$byClass"
+"Sensitivity",0.929577464788732
+"Specificity",0.954545454545455
+"Pos Pred Value",0.916666666666667
+"Neg Pred Value",0.961832061068702
+"Precision",0.916666666666667
+"Recall",0.929577464788732
+"F1",0.923076923076923
+"Prevalence",0.349753694581281
+"Detection Rate",0.32512315270936
+"Detection Prevalence",0.354679802955665
+"Balanced Accuracy",0.942061459667094

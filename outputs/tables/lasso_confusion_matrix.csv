@@ -1,0 +1,5 @@
+"Prediction","Reference","Freq"
+"Malignant","Malignant",67
+"Benign","Malignant",4
+"Malignant","Benign",5
+"Benign","Benign",127
