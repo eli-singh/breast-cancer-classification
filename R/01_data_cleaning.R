@@ -1,6 +1,5 @@
 # R/01_data_cleaning.R
 # Purpose: load wbca data, do train/test split, save processed files
-# Run from project root. Outputs -> data/processed/train.csv and test.csv
 
 # 0. ---- setup ----
 library(faraway)
@@ -65,5 +64,3 @@ readme_text <- c(
   paste0("build_percent: ", build_percent)
 )
 writeLines(readme_text, con = "data/processed/README.txt")
-
-cat("\nSaved processed datasets to data/processed/\n")
