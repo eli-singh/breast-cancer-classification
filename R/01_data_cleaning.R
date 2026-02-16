@@ -51,11 +51,33 @@ split <- createDataPartition(breast$Class, p = build_percent, list = FALSE)
 train <- breast[split, , drop = FALSE]
 test  <- breast[-split, , drop = FALSE]
 
-# 6. ---- save processed datasets ----
+# 6. ---- exploratory data analysis ----
+breast_long <- train %>% 
+  tidyr::pivot_longer(cols = -c(Class, Class_bin),
+                      names_to = "Variable",
+                      values_to = "Value")
+
+boxplot_fig <- ggplot(breast_long, aes(x = Class, y = Value)) +
+  geom_boxplot() +
+  facet_wrap(~ Variable, scales = "free_y") +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Cytological Features by Tumor Classification",
+    x = "Tumor Classification",
+    y = "Standardized Feature Value"
+  )
+
+ggsave("outputs/figures/boxplots_by_class.png",
+       boxplot_fig,
+       width = 10,
+       height = 8,
+       dpi = 300)
+
+# 7. ---- save processed datasets ----
 write.csv(train, file = "data/processed/train.csv", row.names = FALSE)
 write.csv(test,  file = "data/processed/test.csv",  row.names = FALSE)
 
-# 7. ---- update README about these files ----
+# 8. ---- update README about these files ----
 readme_text <- c(
   "train.csv: stratified training set (70%) from wbca dataset",
   "test.csv: holdout test set (30%)",
