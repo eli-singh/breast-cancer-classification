@@ -1,5 +1,127 @@
 ---
-title: "breast_cancer_model"
-format: html
+title: "Breast Cancer Tumor Classification Using Logistic and Penalized Regression"
+author: "Eli Singh, M.S. Biostatistics Candidate"
+format: 
+  html:
+    embed-resources: true
 ---
 
+**Introduction**
+
+Breast cancer is the most commonly occurring type of cancer in the United States. Early and accurate diagnosis is key for effective treatment and improved patient outcomes. The `wbca` dataset from the faraway package in R contains cytological measurements from fine-point needle aspirations of breast masses as an alternative to biopsies.
+
+The objective of this project is to develop a logistic regression model that predicts the likelihood of a tumor being malignant or benign based on cytological features. Through this analysis, I aim to identify the most significant predictors of tumor classification, evaluate model performance through cross-validation and comparison with LASSO regression, and interpret the model in a clinically relevant context.
+
+**Data**
+
+The data used in this project comes from the `wbca` dataset in the R `faraway` package. This dataset was created through a breast cancer study done in Wisconsin, where they tested whether fine needle aspiration was effective in determining tumor status. It consists of 681 observations with 10 predictor variables and a binary response variable `Class` indicating whether a breast tumor is benign or malignant. There are no missing values in the dataset.
+
+The predictor variables are given standardized scores based on the cytological measurements obtained through fine needle aspiration. **Marginal adhesion** refers to how well peripheral cells stick to epithelial cells. **Bare nuclei** denote nuclei that are found without the surrounding cytoplasm, often seen in malignant cells. **Bland chromatin** describes the texture of chromatin, and less variation in the texture is an indicator of benign conditions. **Epithelial cell size** refers to the size of the epithelial cells in the tissue sample; larger cell sizes indicate malignant cells. **Mitoses** counts the number of cells dividing, with higher numbers being markers of rapid growth, often seen with malignant cells. The presence of **normal nucleoli** suggests benign tissue. **Clump thickness** measures the density of peripheral cell clusters around epithelial cells, giving information about tumor mass. **Cell shape uniformity** and **cell size uniformity** measure the consistency of cell shape and size in the tissue sample; greater variability in shape and size among cells in the sample is generally associated with malignant tissues.
+
+Summary statistics and visualizations were created to understand the data better. Figure 1 displays the distribution of cytological features stratified by tumor classification. Across all features, malignant tumors exhibit systematically higher values compared to benign samples. The largest separation is observed for Bare Nuclei, Cell Shape Uniformity, Cell Size Uniformity, and Clump Thickness, suggesting strong discriminatory potential for these variables. The consistent upward shift in medians for malignant samples indicates that increasing cytological abnormality is associated with higher likelihood of malignancy.
+
+![](images/boxplots_by_class.png)
+
+Summary statistics indicate that malignant tumors exhibit consistently higher mean values across all cytological predictors compared to benign samples. The largest differences are observed for Bare Nuclei, Cell Shape Uniformity, Cell Size Uniformity, and Clump Thickness. In contrast, benign samples tend to have values closer to 1, reflecting more normal cellular characteristics.
+
+Multicollinearity was assessed through pairwise correlations. Several predictors demonstrated moderate to high correlation. In particular, Cell Shape Uniformity and Cell Size Uniformity were strongly correlated (r = 0.91), consistent with their shared biological interpretation. Given these relationships, multicollinearity diagnostics were further evaluated during model development using variance inflation factors (VIF).
+
+While some additional variable pairs (e.g., Marginal Adhesion and Clump Thickness) showed moderate association, these correlations were substantially lower than the strongest observed pair and did not suggest redundancy severe enough to preclude inclusion in the initial model.
+
+\newpage
+
+**Methods**
+
+*Data Partitioning*
+
+The dataset was divided into a stratified training set (70%) and holdout test set (30%) to preserve the original class distribution of malignant and benign tumors. Model development was conducted exclusively on the training set, and final performance metrics were evaluated on the independent test set.\
+
+*Logistic Regression*
+
+A multivariable logistic regression model was fit using all cytological predictors. Multicollinearity was assessed using variance inflation factors (VIF) to ensure stable coefficient estimation. To explore potential biological interactions, selected interaction terms were examined; however, only statistically meaningful interactions were retained. Model coefficients were interpreted using odds ratios, providing clinically meaningful effect estimates.
+
+*Penalized Regression (LASSO)*
+
+To improve model generalizability and reduce overfitting, penalized logistic regression using the Least Absolute Shrinkage and Selection Operator (LASSO) was implemented. The regularization parameter ($\lambda$) was selected using 10-fold cross-validation on the training set, optimizing for the area under the receiver operating characteristic curve (AUC). The LASSO model's performance was compared to the standard logistic regression model using AUC, sensitivity, and specificity metrics on the test set.
+
+*Model Evaluation*
+
+Model performance was evaluated on the holdout test set using:
+
+-   Area Under the Receiver Operating Characteristic Curve (AUC)
+
+-   Sensitivity (true positive rate)
+
+-   Specificity (true negative rate)
+
+-   Confusion matrices at a 0.5 probability threshold
+
+ROC curves were constructed to compare discrimination between models.
+
+**Results**
+
+*Discrimination Performance*
+
+Both models demonstrated strong discriminatory ability.
+
+-   Logistic regression AUC: 0.9898
+
+-   LASSO regression AUC: 0.9904
+
+The ROC curves show clear separation from the diagonal reference line, indicating strong classification performance. The LASSO model achieved slightly higher AUC, suggesting improved generalization performance relative to the unpenalized model.
+
+*Classification Performance*
+
+|                     |                 |                 |
+|---------------------|-----------------|-----------------|
+| **Model**           | **Sensitivity** | **Specificity** |
+| Logistic Regression | 0.9296          | 0.9545          |
+| LASSO Regression    | 0.9437          | 0.9621          |
+
+Both models achieved high sensitivity (\>90%) and specificity (\>95%), indicating strong performance in correctly identifying malignant tumors while minimizing false positives The LASSO model reduced the rate of false positives compared to logistic regression.
+
+*Key Predictors*
+
+Across models, the strongest predictors of malignancy included:
+
+-   Bare nuclei
+
+-   Cell shape uniformity
+
+-   Cell size uniformity
+
+-   Clump thickness
+
+A one-unit increase in **Bare Nuclei** was associated with a **2.32-fold increase in the odds of malignancy** (OR = 2.32, 95% CI: 1.44–3.74, p \< 0.001). Increased **Clump Thickness** was associated with a 2.54-fold increase in odds of malignancy (OR = 2.54, 95% CI: 1.33–4.84, p = 0.005). These findings are consistent with biological expectations, as greater cellular irregularity and nuclear abnormality are hallmarks of malignant tumors.
+
+*Model Comparison*
+
+While both models achieved strong discrimination, the LASSO model reduced coefficient magnitude and slightly improved classification performance. This suggests that penalization may enhance model stability without sacrificing predictive accuracy.
+
+Overall, both approaches performed well, and model choice may depend on preference for interpretability (logistic regression) versus parsimony (LASSO).
+
+\newpage
+
+**Discussion**
+
+This analysis demonstrates that cytological features derived from fine-needle aspiration can accurately distinguish malignant from benign tumors using relatively simple statistical models.
+
+Both logistic regression and penalized regression achieved strong predictive performance on an independent test set. The results highlight the importance of nuclear irregularity and cellular uniformity as key diagnostic indicators.
+
+The LASSO model provided slightly improved generalization performance and a more compact set of predictors, suggesting potential utility in settings where model simplicity is desired.
+
+**Limitations**
+
+-   The dataset consists of standardized, unit-less features, limiting direct clinical interpretability
+
+-   External validation using an independent data set was not performed
+
+-   Nonlinear methods were not explored
+
+Future work could explore nonlinear methods such as tree-based models or evaluate model performance on external data.
+
+**Conclusion**
+
+Logistic regression and penalized regression models can effectively classify breast tumors using cytological features. Both models demonstrated high sensitivity and specificity, with LASSO showing marginal performance improvement.
+
+This case study illustrates the practical application of statistical modeling techniques for clinical classification tasks and highlights the importance of rigorous validation using independent test data.
