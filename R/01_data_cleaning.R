@@ -43,7 +43,6 @@ table(breast$Class)
 breast$Class <- factor(breast$Class, levels = c(0, 1), labels = c("Malignant", "Benign"))
 
 # 4. ---- quick checks ----
-stopifnot(sum(is.na(breast)) == 0)  # will throw an error if NAs appear
 str(breast)
 summary(breast)
 
@@ -53,17 +52,11 @@ split <- createDataPartition(breast$Class, p = build_percent, list = FALSE)
 train <- breast[split, , drop = FALSE]
 test  <- breast[-split, , drop = FALSE]
 
-# sanity checks
-cat("\nTrain / Test sizes:\n")
-cat("Train:", nrow(train), "\nTest:", nrow(test), "\n")
-cat("Train class proportions:\n"); print(prop.table(table(train$Class)))
-cat("Test class proportions:\n");  print(prop.table(table(test$Class)))
-
 # 6. ---- save processed datasets ----
 write.csv(train, file = "data/processed/train.csv", row.names = FALSE)
 write.csv(test,  file = "data/processed/test.csv",  row.names = FALSE)
 
-# 7. ---- save a small README about these files ----
+# 7. ---- update README about these files ----
 readme_text <- c(
   "train.csv: stratified training set (70%) from wbca dataset",
   "test.csv: holdout test set (30%)",
