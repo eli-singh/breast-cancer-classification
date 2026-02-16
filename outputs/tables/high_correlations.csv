@@ -1,0 +1,12 @@
+"Variable_1","Variable_2","Correlation"
+"Marginal_Adhesion","Cell_Shape_Uniformity",0.700310076737381
+"Bare_Nuclei","Cell_Shape_Uniformity",0.729710481547707
+"Bland_Chromatin","Cell_Shape_Uniformity",0.748612238037331
+"Epithelial_Cell_Size","Cell_Shape_Uniformity",0.733813124324266
+"Normal_Nucleoli","Cell_Shape_Uniformity",0.713649645043311
+"Marginal_Adhesion","Cell_Size_Uniformity",0.71149764512014
+"Bare_Nuclei","Cell_Size_Uniformity",0.706810580059829
+"Bland_Chromatin","Cell_Size_Uniformity",0.774630949020512
+"Epithelial_Cell_Size","Cell_Size_Uniformity",0.75711906972536
+"Normal_Nucleoli","Cell_Size_Uniformity",0.724036509175425
+"Cell_Shape_Uniformity","Cell_Size_Uniformity",0.910499365758912

@@ -73,6 +73,30 @@ ggsave("outputs/figures/boxplots_by_class.png",
        height = 8,
        dpi = 300)
 
+summary_tbl <- train %>%
+  group_by(Class) %>%
+  summarise(across(where(is.numeric),
+                   list(mean = mean, sd = sd),
+                   na.rm = TRUE))
+
+write.csv(summary_tbl,
+          "outputs/tables/summary_statistics.csv",
+          row.names = FALSE)
+
+cor_matrix <- cor(train %>% dplyr::select(-Class, -Class_bin))
+
+high_cor <- which(abs(cor_matrix) > 0.7 & upper.tri(cor_matrix), arr.ind = TRUE)
+
+cor_tbl <- data.frame(
+  Variable_1 = rownames(cor_matrix)[high_cor[,1]],
+  Variable_2 = colnames(cor_matrix)[high_cor[,2]],
+  Correlation = cor_matrix[high_cor]
+)
+
+write.csv(cor_tbl,
+          "outputs/tables/high_correlations.csv",
+          row.names = FALSE)
+
 # 7. ---- save processed datasets ----
 write.csv(train, file = "data/processed/train.csv", row.names = FALSE)
 write.csv(test,  file = "data/processed/test.csv",  row.names = FALSE)
