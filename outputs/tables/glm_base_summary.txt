@@ -1,0 +1,28 @@
+
+Call:
+glm(formula = formula_base, family = binomial(link = "logit"), 
+    data = train)
+
+Coefficients:
+                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           -13.98623    2.78065  -5.030 4.91e-07 ***
+Marginal_Adhesion       0.58031    0.21898   2.650 0.008049 ** 
+Bare_Nuclei             0.84085    0.24440   3.441 0.000581 ***
+Bland_Chromatin         0.67395    0.35376   1.905 0.056762 .  
+Epithelial_Cell_Size   -0.20926    0.35771  -0.585 0.558557    
+Mitoses                 0.87671    0.50010   1.753 0.079589 .  
+Normal_Nucleoli         0.16969    0.19208   0.883 0.377004    
+Clump_Thickness         0.93203    0.32930   2.830 0.004650 ** 
+Cell_Shape_Uniformity   0.05209    0.47308   0.110 0.912323    
+Cell_Size_Uniformity    0.20450    0.39122   0.523 0.601174    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 618.587  on 477  degrees of freedom
+Residual deviance:  38.533  on 468  degrees of freedom
+AIC: 58.533
+
+Number of Fisher Scoring iterations: 10
+
