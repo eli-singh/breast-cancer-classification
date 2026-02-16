@@ -1,5 +1,5 @@
 # R/02_logistic_model.R
-# Fit logistic regression(s), export ORs + CIs, save model object
+# Purpose: Fit logistic regression(s), export ORs + CIs, save model object
 
 # ---- setup ----
 library(dplyr)
